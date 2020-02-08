@@ -10,7 +10,7 @@ const os = require('os')
 var con = mysql.createConnection({
     host: "localhost",
     user: "root",
-    password: "--",
+    password: "Emeline1010!",
     database: "shorten"
 });
   
@@ -21,42 +21,68 @@ con.connect(function(err) {
 
 app.use(bodyParser.urlencoded({ extended: true }));
 
-/* app.get('/shorter', function (req, res) {
+app.get('/', function (req, res) {
+    //res.redirect(301, '/shorter')
     res.sendFile(path.join(__dirname + '/index.html'));
-}) */
+}) 
 
 app.post('/', function (req, res){
-    let r = Math.random().toString(36).substr(2, 5)
-    hostname = os.hostname;
-    res.send(hostname+"/"+r);
-    date = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '')
-    var sql = "INSERT INTO urls (urls, short, date) VALUES ?";
-    var values = [[req.body.url, r, date]];
-    con.query(sql, [values], function (err, result){
+    let r = Math.random().toString(36).substr(2, 5) // create random string
+    hostname = os.hostname; //get hostname to create url
+    date = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '') //get date to store in DB
+    console.log("post request")
+    //check if url is not already shorten
+    var sql_search = 'SELECT * FROM urls WHERE urls = ?'
+    var values_search = [[mysql.escape(req.body.url)]]
+    con.query(sql_search, values_search, function (err, result){
         if (err) throw err;
-        console.log("Number of records inserted: " + result.affectedRows)
-        return;
-    });
+        if ( typeof result[0] !== 'undefined' && result ){ //if no, create url 
+            console.log("existing url")
+            console.log(req.body.url)
+            var sql = 'SELECT short FROM urls WHERE urls = ?'
+            var values = [[mysql.escape(req.body.url)]];
+            con.query(sql, values, function (err, result2, fields) {
+                //console.log("query")
+                if (err) throw err;
+                console.log(result2)
+                if ( typeof result2[0] !== 'undefined' && result2 ){
+                    console.log(result2[0].short)
+                    var redir = (result2[0].short.replace(/['"]+/g, ''));
+                    res.send(hostname+"/s/"+redir)
+                }
+            })
+        } else { //if yes, get existing shorten url
+            console.log("no existing url")
+            var sql_insert = 'INSERT INTO urls (urls, short, date) VALUES ?';
+            var values = [[mysql.escape(req.body.url), mysql.escape(r), date]];
+            con.query(sql_insert, [values], function (err, result){
+                if (err) throw err;
+                console.log("Number of records inserted: " + result.affectedRows)
+                return;
+            });
+            res.send(hostname+"/s/"+r);
+        }
+    })
 });
 
-app.get('/:id', function (req, res, next){
-    if (req.params.id === 'shorter'){
-        res.sendFile(path.join(__dirname + '/index.html'));
-    } else {
-        console.log(req.params.id);
-        var sql = "SELECT urls FROM urls WHERE short = "+ mysql.escape(req.params.id);
-        con.query(sql, function (err, result, fields) {
-            if (err) throw err;
-            if ( typeof result[0] !== 'undefined' && result ){
-                res.redirect(301, result[0].urls)
-            }
-            //console.log(result);
-            //console.log(result[0].urls)
-        });
-    }
 
-    
-    
+app.get('/s/:id', function (req, res, next){
+/*     if (req.params.id === 'shorter'){
+        res.sendFile(path.join(__dirname + '/index.html'));
+    } else { */
+    console.log(req.params.id);
+    var sql = 'SELECT urls FROM urls WHERE short = ?'
+    var values = [[mysql.escape(req.params.id)]];
+    con.query(sql, values, function (err, result, fields) {
+        if (err) throw err;
+        if ( typeof result[0] !== 'undefined' && result ){
+            var redir = (result[0].urls.replace(/['"]+/g, ''));
+            res.redirect(redir)
+        }
+        console.log(result);
+        console.log(result[0].urls)
+    });
+    //}
 })
 
 app.listen(80, function () {
