@@ -10,7 +10,7 @@ const os = require('os')
 var con = mysql.createConnection({
     host: "localhost",
     user: "root",
-    password: "Emeline1010!",
+    password: "--!",
     database: "shorten"
 });
   
