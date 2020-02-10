@@ -38,20 +38,8 @@ app.post('/', function (req, res){
     con.query(sql_search, values_search, function (err, result){
         if (err) throw err;
         if (result.length > 0){ //if no, create url 
-            console.log("existing url")
-            console.log(req.body.url)
-            var sql = 'SELECT short FROM urls WHERE urls = ?'
-            var values = [[mysql.escape(req.body.url)]];
-            con.query(sql, values, function (err, result2, fields) {
-                //console.log("query")
-                if (err) throw err;
-                console.log(result2)
-                if ( typeof result2[0] !== 'undefined' && result2 ){
-                    console.log(result2[0].short)
-                    var redir = (result2[0].short.replace(/['"]+/g, ''));
-                    res.send(hostname+"/s/"+redir)
-                }
-            })
+            var redir = (result[0].short.replace(/['"]+/g, ''));
+            res.send(hostname+"/s/"+redir)
         } else { //if yes, get existing shorten url
             console.log("no existing url")
             var sql_insert = 'INSERT INTO urls (urls, short, date) VALUES ?';
