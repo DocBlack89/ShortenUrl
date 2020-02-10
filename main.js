@@ -10,7 +10,7 @@ const os = require('os')
 var con = mysql.createConnection({
     host: "localhost",
     user: "root",
-    password: "--!",
+    password: "--",
     database: "shorten"
 });
   
@@ -20,10 +20,11 @@ con.connect(function(err) {
 });
 
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.static('public'));
 
 app.get('/', function (req, res) {
     //res.redirect(301, '/shorter')
-    res.sendFile(path.join(__dirname + '/index.html'));
+    res.sendFile(path.join(__dirname + '/public/index.html'));
 }) 
 
 app.post('/', function (req, res){
@@ -90,6 +91,4 @@ app.listen(80, function () {
 })
 
 
-
-
-//mysql localhost:3306
+//    create tables urls (id INT AUTO_IN)
