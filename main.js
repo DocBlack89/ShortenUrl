@@ -37,7 +37,7 @@ app.post('/', function (req, res){
     var values_search = [[mysql.escape(req.body.url)]]
     con.query(sql_search, values_search, function (err, result){
         if (err) throw err;
-        if ( typeof result[0] !== 'undefined' && result ){ //if no, create url 
+        if (result.length > 0){ //if no, create url 
             console.log("existing url")
             console.log(req.body.url)
             var sql = 'SELECT short FROM urls WHERE urls = ?'
@@ -76,12 +76,12 @@ app.get('/s/:id', function (req, res, next){
     var values = [[mysql.escape(req.params.id)]];
     con.query(sql, values, function (err, result, fields) {
         if (err) throw err;
-        if ( typeof result[0] !== 'undefined' && result ){
+        if ( result.length > 0){
             var redir = (result[0].urls.replace(/['"]+/g, ''));
             res.redirect(redir)
+        } else {
+            res.redirect('/');
         }
-        console.log(result);
-        console.log(result[0].urls)
     });
     //}
 })
@@ -92,3 +92,4 @@ app.listen(80, function () {
 
 
 //    create tables urls (id INT AUTO_IN)
+
