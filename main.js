@@ -10,14 +10,36 @@ const os = require('os')
 var con = mysql.createConnection({
     host: "localhost",
     user: "root",
-    password: "--",
+    password: "?/qM45J8J^:+",
     database: "shorten"
 });
+
+
+
+
+var handleDBDisconnect = function() {
+    con.on('error', function(err) {
+        if (!err.fatal) {
+            return;
+        }
+        if (err.code !== 'PROTOCOL_CONNECTION_LOST') {
+            console.log("PROTOCOL_CONNECTION_LOST");
+            throw err;
+        }
+        log.error("The database is error:" + err.stack);
+
+        handleDBDisconnect();
+    });
+   };
+handleDBDisconnect();
+
+
+
   
-con.connect(function(err) {
-    if (err) throw err;
-    console.log("Connected!");
-});
+//con.connect(function(err) {
+//    if (err) throw err;
+//    console.log("Connected!");
+//});
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static('public'));
@@ -37,7 +59,7 @@ app.post('/', function (req, res){
     var values_search = [[mysql.escape(req.body.url)]]
     con.query(sql_search, values_search, function (err, result){
         if (err) throw err;
-        if ( typeof result[0] !== 'undefined' && result ){ //if no, create url 
+        if (result.length > 0){ //if no, create url 
             console.log("existing url")
             console.log(req.body.url)
             var sql = 'SELECT short FROM urls WHERE urls = ?'
@@ -76,17 +98,19 @@ app.get('/s/:id', function (req, res, next){
     var values = [[mysql.escape(req.params.id)]];
     con.query(sql, values, function (err, result, fields) {
         if (err) throw err;
-        if ( typeof result[0] !== 'undefined' && result ){
+        if (result.length > 0){
             var redir = (result[0].urls.replace(/['"]+/g, ''));
             res.redirect(redir)
-        }
-        console.log(result);
-        console.log(result[0].urls)
+        } else {
+	    res.redirect('/');
+	}
+        //console.log(result);
+        //console.log(result[0].urls)
     });
     //}
 })
 
-app.listen(80, function () {
+app.listen(3000, function () {
   console.log('Example app listening on port 3000!')
 })
 
