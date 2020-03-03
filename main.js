@@ -74,6 +74,8 @@ app.post('/', function (req, res){
                     res.send(hostname+"/s/"+redir)
                 }
             })
+            var redir = (result[0].short.replace(/['"]+/g, ''));
+            res.send(hostname+"/s/"+redir)
         } else { //if yes, get existing shorten url
             console.log("no existing url")
             var sql_insert = 'INSERT INTO urls (urls, short, date) VALUES ?';
@@ -106,6 +108,12 @@ app.get('/s/:id', function (req, res, next){
 	}
         //console.log(result);
         //console.log(result[0].urls)
+        if ( result.length > 0){
+            var redir = (result[0].urls.replace(/['"]+/g, ''));
+            res.redirect(redir)
+        } else {
+            res.redirect('/');
+        }
     });
     //}
 })
@@ -113,6 +121,3 @@ app.get('/s/:id', function (req, res, next){
 app.listen(3000, function () {
   console.log('Example app listening on port 3000!')
 })
-
-
-//    create tables urls (id INT AUTO_IN)
