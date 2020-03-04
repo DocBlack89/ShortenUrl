@@ -10,7 +10,7 @@ const os = require('os')
 var con = mysql.createConnection({
     host: "localhost",
     user: "root",
-    password: "?/qM45J8J^:+",
+    password: "--",
     database: "shorten"
 });
 
@@ -23,7 +23,7 @@ var handleDBDisconnect = function() {
             return;
         }
         if (err.code !== 'PROTOCOL_CONNECTION_LOST') {
-            console.log("PROTOCOL_CONNECTION_LOST");
+          console.log("PROTOCOL_CONNECTION_LOST");
             throw err;
         }
         log.error("The database is error:" + err.stack);
@@ -102,18 +102,12 @@ app.get('/s/:id', function (req, res, next){
         if (err) throw err;
         if (result.length > 0){
             var redir = (result[0].urls.replace(/['"]+/g, ''));
-            res.redirect(redir)
+	    res.redirect(301, redir)
         } else {
-	    res.redirect('/');
+	    res.redirect(301, '/');
 	}
         //console.log(result);
         //console.log(result[0].urls)
-        if ( result.length > 0){
-            var redir = (result[0].urls.replace(/['"]+/g, ''));
-            res.redirect(redir)
-        } else {
-            res.redirect('/');
-        }
     });
     //}
 })
