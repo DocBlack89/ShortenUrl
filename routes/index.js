@@ -7,13 +7,6 @@ var mysql = require('mysql');
 const os = require('os')
 const auth = require('./auth');
 
-const mongoose = require('mongoose');
-const passport = require('passport');
-const Users = mongoose.model('Users');
-
-
-router.use('/api', require('./api'));
-
 
 var con = mysql.createConnection({
     host: "localhost",
@@ -119,48 +112,5 @@ router.get('/s/:id', function (req, res, next){
 router.get('/signin', auth.optional, function (req, res){
     res.sendFile(path.join(__dirname + '/public/signin.html'));
 })
-
-router.post('/signin', auth.optional, (req, res, next) => {
-    //const { body: { user } } = req;
-    //console.log(req.body)
-    var user = req.body
-    console.log(user.email)
-    console.log(user.password)
-    if(!user.email) {
-      return res.status(422).json({
-        errors: {
-          email: 'is required',
-        },
-      });
-    }
-  
-    if(!user.password) {
-      return res.status(422).json({
-        errors: {
-          password: 'is required',
-        },
-      });
-    }
-  
-    return passport.authenticate('local', { session: false }, (err, passportUser, info) => {
-      if(err) {
-        return next(err);
-      }
-  
-      if(passportUser) {
-        const user = passportUser;
-        user.token = passportUser.generateJWT();
-  
-        return res.json({ user: user.toAuthJSON() });
-      } else {
-            console.log(info)
-            return res.json(info);
-      }
-  
-    })(req, res, next);
-  });
-
-
-
 
 module.exports = router;
