@@ -125,12 +125,12 @@
 			console.log(json)
 			var xhttp = new XMLHttpRequest();
 			xhttp.open("POST", "/signin", true);
-			xhttp.setRequestHeader("Content-Type", "document");
+			xhttp.setRequestHeader("Content-Type", "application/document");
 			xhttp.onreadystatechange = function() {
 				if (this.readyState == 4 && this.status == 200) {
 				}
 			};
-			xhttp.send([body]);
+			xhttp.send(json);			
 		}
 	</script>
 
