@@ -19,9 +19,11 @@
                 name: document.getElementById("name").value
             },
             function(data, status){
-                alert(data);
+                //alert(data);
+                $("#form").append(data)
             });
             return false;
         });
+        
     </script>
 </html>
