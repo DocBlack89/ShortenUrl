@@ -62,11 +62,11 @@ router.post('/', function (req, res){
                 if ( typeof result2[0] !== 'undefined' && result2 ){
                     console.log(result2[0].short)
                     var redir = (result2[0].short.replace(/['"]+/g, ''));
-                    res.send(hostname+"/s/"+redir)
+                    res.send(hostname+"/"+redir)
                 }
             })
             var redir = (result[0].short.replace(/['"]+/g, ''));
-            res.send(hostname+"/s/"+redir)
+            res.send(hostname+"/"+redir)
         } else { //if yes, get existing shorten url
             console.log("no existing url")
             var sql_insert = 'INSERT INTO urls (urls, short, date) VALUES ?';
@@ -76,7 +76,7 @@ router.post('/', function (req, res){
                 console.log("Number of records inserted: " + result.affectedRows)
                 return;
             });
-            res.send(hostname+"/s/"+r);
+            res.send(hostname+"/"+r);
         }
     })
 });
@@ -86,8 +86,11 @@ router.get('/account', function (req, res) {
     res.sendFile(path.join(__dirname + '/public/account.html'));
 }) 
 
+router.get('/signin', function (req, res){
+  res.sendFile(path.join(__dirname + '/public/signin.html'));
+})
 
-router.get('/s/:id', function (req, res, next){
+router.get('/:id', function (req, res, next){
 /*     if (req.params.id === 'shorter'){
         res.sendFile(path.join(__dirname + '/index.html'));
     } else { */
@@ -108,8 +111,6 @@ router.get('/s/:id', function (req, res, next){
     //}
 })
 
-router.get('/signin', function (req, res){
-    res.sendFile(path.join(__dirname + '/public/signin.html'));
-})
+
 
 module.exports = router;
