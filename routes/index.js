@@ -122,7 +122,7 @@ router.get('/signin', auth.optional, function (req, res){
 
 router.post('/signin', auth.optional, (req, res, next) => {
     const { body: { user } } = req;
-    console.log(req)
+    console.log(req.body)
     if(!user.email) {
       return res.status(422).json({
         errors: {
