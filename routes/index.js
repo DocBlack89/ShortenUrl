@@ -63,6 +63,7 @@ router.post('/', function (req, res){
                     console.log(result2[0].short)
                     var redir = (result2[0].short.replace(/['"]+/g, ''));
                     res.send(hostname+"/"+redir)
+                    res.end()
                 }
             })
             var redir = (result[0].short.replace(/['"]+/g, ''));
@@ -77,6 +78,7 @@ router.post('/', function (req, res){
                 return;
             });
             res.send(hostname+"/"+r);
+            res.end()
         }
     })
 });
@@ -91,9 +93,6 @@ router.get('/signin', function (req, res){
 })
 
 router.get('/:id', function (req, res, next){
-/*     if (req.params.id === 'shorter'){
-        res.sendFile(path.join(__dirname + '/index.html'));
-    } else { */
     console.log(req.params.id);
     var sql = 'SELECT urls FROM urls WHERE short = ?'
     var values = [[mysql.escape(req.params.id)]];
@@ -101,14 +100,13 @@ router.get('/:id', function (req, res, next){
         if (err) throw err;
         if (result.length > 0){
             var redir = (result[0].urls.replace(/['"]+/g, ''));
-	    res.redirect(301, redir)
+            res.redirect(301, redir)
+            res.end()
         } else {
-	    res.redirect(301, '/');
-	}
-        //console.log(result);
-        //console.log(result[0].urls)
+             res.redirect(301, '/');
+             res.end()
+	      }
     });
-    //}
 })
 
 
