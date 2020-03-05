@@ -1,0 +1,8 @@
+(node:191120) DeprecationWarning: current URL string parser is deprecated, and will be removed in a future version. To use the new parser, pass option { useNewUrlParser: true } to MongoClient.connect.
+(node:191120) DeprecationWarning: current Server Discovery and Monitoring engine is deprecated, and will be removed in a future version. To use the new Server Discover and Monitoring engine, pass option { useUnifiedTopology: true } to the MongoClient constructor.
+Server running on http://localhost:8000/
+[0mGET / [32m200 [0m25.829 ms - 303[0m
+[0mGET / [32m200 [0m4.844 ms - 303[0m
+[0mGET / [32m200 [0m10.803 ms - 303[0m
+[0mGET / [32m200 [0m12.321 ms - 303[0m
+[0mGET / [32m200 [0m1.538 ms - 303[0m
