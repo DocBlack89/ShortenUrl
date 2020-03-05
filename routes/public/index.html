@@ -1,11 +1,26 @@
 <html>
+    <head>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="css/main.css">
+    </head>
+    <body>
+        <div class="form__group field">
+            <form action="/" method="POST" id="form">
+                <input type="input" class="form__field" placeholder="Name" name="name" id='name' required />
+                <label for="name" class="form__label">Name</label>
+            </form>
+        </div>
+    </body>
 
-<link rel="stylesheet" type="text/css" href="css/main.css">
-<div class="form__group field">
-    <form action="/" method="POST" >
-        <input type="input" class="form__field" placeholder="Name" name="name" id='name' required />
-        <label for="name" class="form__label">Name</label>
-    </form>
-</div>
-
+    <script>
+        $("#form").submit(function(){
+            $.post("/",
+            {
+                name: document.getElementById("name").value
+            },
+            function(data, status){
+                alert(data);
+            });
+        });
+    </script>
 </html>
