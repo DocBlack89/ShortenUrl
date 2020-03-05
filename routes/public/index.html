@@ -23,7 +23,7 @@
             },
             function(data, status){
                 //alert(data);
-                $("#short").append("<a href ='https://"+data+"'>https://"+data+"</a>")
+                $("#short").replaceWith("<a href ='https://"+data+"'>https://"+data+"</a>")
             });
             return false;
         });
