@@ -47,14 +47,14 @@ router.post('/', function (req, res){
     console.log("post request")
     //check if url is not already shorten
     var sql_search = 'SELECT * FROM urls WHERE urls = ?'
-    var values_search = [[mysql.escape(req.body.url)]]
+    var values_search = [[mysql.escape(req.body.name)]]
     con.query(sql_search, values_search, function (err, result){
         if (err) throw err;
         if (result.length > 0){ //if no, create url 
             console.log("existing url")
-            console.log(req.body.url)
+            console.log(req.body.name)
             var sql = 'SELECT short FROM urls WHERE urls = ?'
-            var values = [[mysql.escape(req.body.url)]];
+            var values = [[mysql.escape(req.body.name)]];
             con.query(sql, values, function (err, result2, fields) {
                 //console.log("query")
                 if (err) throw err;
@@ -70,7 +70,7 @@ router.post('/', function (req, res){
         } else { //if yes, get existing shorten url
             console.log("no existing url")
             var sql_insert = 'INSERT INTO urls (urls, short, date) VALUES ?';
-            var values = [[mysql.escape(req.body.url), mysql.escape(r), date]];
+            var values = [[mysql.escape(req.body.name), mysql.escape(r), date]];
             con.query(sql_insert, [values], function (err, result){
                 if (err) throw err;
                 console.log("Number of records inserted: " + result.affectedRows)
