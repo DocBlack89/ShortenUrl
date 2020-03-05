@@ -10,7 +10,7 @@
                 <label for="name" class="form__label">Name</label>
             </form>
             <p id="short">
-                
+                <a id="shorta"></a>
             </p>
         </div>
     </body>
@@ -23,7 +23,7 @@
             },
             function(data, status){
                 //alert(data);
-                $("#short").replaceWith("<a href ='https://"+data+"'>https://"+data+"</a>")
+                $("#shorta").replaceWith("<a href ='https://"+data+"'>https://"+data+"</a>")
             });
             return false;
         });
