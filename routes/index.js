@@ -5,7 +5,6 @@ const fs = require('fs');
 const bodyParser = require('body-parser');
 var mysql = require('mysql');
 const os = require('os')
-const auth = require('./auth');
 
 
 var con = mysql.createConnection({
