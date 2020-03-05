@@ -6,8 +6,10 @@ const bodyParser = require('body-parser');
 var mysql = require('mysql');
 const os = require('os')
 const auth = require('./auth');
-const passport = require('passport');
 
+const mongoose = require('mongoose');
+const passport = require('passport');
+const Users = mongoose.model('Users');
 
 
 router.use('/api', require('./api'));
