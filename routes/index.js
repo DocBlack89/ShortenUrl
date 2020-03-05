@@ -36,7 +36,7 @@ handleDBDisconnect();
 router.use(bodyParser.urlencoded({ extended: true }));
 router.use(express.static('./public'));
 
-router.get('/', auth.optional,  function (req, res) {
+router.get('/',  function (req, res) {
     res.sendFile(path.join(__dirname + '/public/index.html'));
 }) 
 
@@ -82,7 +82,7 @@ router.post('/', function (req, res){
 });
 
 
-router.get('/account', auth.optional,  function (req, res) {
+router.get('/account', function (req, res) {
     res.sendFile(path.join(__dirname + '/public/account.html'));
 }) 
 
@@ -108,7 +108,7 @@ router.get('/s/:id', function (req, res, next){
     //}
 })
 
-router.get('/signin', auth.optional, function (req, res){
+router.get('/signin', function (req, res){
     res.sendFile(path.join(__dirname + '/public/signin.html'));
 })
 
