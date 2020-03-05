@@ -5,7 +5,7 @@
     </head>
     <body>
         <div class="form__group field">
-            <form id="form">
+            <form action="/" method="POST" id="form">
                 <input type="input" class="form__field" placeholder="Name" name="name" id='name' required />
                 <label for="name" class="form__label">Name</label>
             </form>
@@ -21,6 +21,7 @@
             function(data, status){
                 alert(data);
             });
+            return false;
         });
     </script>
 </html>
