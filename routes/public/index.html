@@ -9,7 +9,9 @@
                 <input type="input" class="form__field" placeholder="Name" name="name" id='name' required />
                 <label for="name" class="form__label">Name</label>
             </form>
-            <p id="short"></p>
+            <p id="short">
+                
+            </p>
         </div>
     </body>
 
@@ -21,7 +23,7 @@
             },
             function(data, status){
                 //alert(data);
-                $("#short").append(data)
+                $("#short").append("<a href ='"+data+"'>https://"+data+"</a>")
             });
             return false;
         });
