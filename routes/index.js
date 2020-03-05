@@ -7,6 +7,10 @@ var mysql = require('mysql');
 const os = require('os')
 const auth = require('./auth');
 
+
+router.use('/api', require('./api'));
+
+
 var con = mysql.createConnection({
     host: "localhost",
     user: "root",
@@ -149,6 +153,5 @@ router.post('/signin', auth.optional, (req, res, next) => {
 
 
 
-router.use('/api', require('./api'));
 
 module.exports = router;
