@@ -124,6 +124,8 @@ router.post('/signin', auth.optional, (req, res, next) => {
     //const { body: { user } } = req;
     //console.log(req.body.email)
     var user = req.body
+    console.log(user.email)
+    console.log(user.password)
     if(!user.email) {
       return res.status(422).json({
         errors: {
