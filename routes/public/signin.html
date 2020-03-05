@@ -121,7 +121,7 @@
 		function Connect(){
 			var email = document.getElementById("email").value
 			var password = document.getElementById("password").value
-			var json = JSON.stringify("{'user':{'email':'"+email+"', 'password': '"+password+"'}}")
+			var json = JSON.stringify({"user":{"email":""+email+"", "password": ""+password+""}})
 			console.log(json)
 			var xhttp = new XMLHttpRequest();
 			xhttp.open("POST", "/signin", true);
