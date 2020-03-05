@@ -66,8 +66,6 @@ router.post('/', function (req, res){
                     res.end()
                 }
             })
-            var redir = (result[0].short.replace(/['"]+/g, ''));
-            res.send(hostname+"/"+redir)
         } else { //if yes, get existing shorten url
             console.log("no existing url")
             var sql_insert = 'INSERT INTO urls (urls, short, date) VALUES ?';
