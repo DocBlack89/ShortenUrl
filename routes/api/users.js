@@ -33,7 +33,7 @@ router.post('/signout', auth.optional, (req, res, next) => {
 });
 
 //POST login route (optional, everyone has access)
-router.post('/signin', auth.optional, (req, res, next) => {
+router.post('/api/signin', auth.optional, (req, res, next) => {
   const { body: { user } } = req;
 
   if(!user.email) {
