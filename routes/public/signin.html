@@ -121,7 +121,7 @@
 		function Connect(){
 			var email = document.getElementById("email").value
 			var password = document.getElementById("password").value
-			var json = "{'user':{'email':''"+email+"'', 'password': '"+password+"'}}"
+			var json = "{'user':{'email':'"+email+"', 'password': '"+password+"'}}"
 			var xhttp = new XMLHttpRequest();
 			xhttp.onreadystatechange = function() {
 				if (this.readyState == 4 && this.status == 200) {
