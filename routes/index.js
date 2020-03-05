@@ -116,7 +116,7 @@ router.get('/s/:id', function (req, res, next){
     //}
 })
 
-router.get('/signin', auth.required, function (req, res){
+router.get('/signin', auth.optional, function (req, res){
     res.sendFile(path.join(__dirname + '/public/signin.html'));
 })
 
