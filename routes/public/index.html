@@ -9,6 +9,7 @@
                 <input type="input" class="form__field" placeholder="Name" name="name" id='name' required />
                 <label for="name" class="form__label">Name</label>
             </form>
+            <p id="short"></p>
         </div>
     </body>
 
@@ -20,7 +21,7 @@
             },
             function(data, status){
                 //alert(data);
-                $("#form").append(data)
+                $("#short").append(data)
             });
             return false;
         });
