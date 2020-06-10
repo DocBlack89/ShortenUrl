@@ -26,7 +26,7 @@ var handleDBDisconnect = function() {
           console.log("PROTOCOL_CONNECTION_LOST");
             throw err;
         }
-        log.error("The database is error:" + err.stack);
+        console.log("The database is error:" + err.stack);
 
         handleDBDisconnect();
     });
